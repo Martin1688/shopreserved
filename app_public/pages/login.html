@@ -15,13 +15,35 @@
         integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <script>
         $(function () {
-            
-        })
+            //init();
+        });
+        const init=()=>{
+            $.ajax({
+                type:'POST',
+                url:'http://localhost:3000/api/initdata',
+                async:false,
+                success:(result)=>{
+                    $('#formerr').val(JSON.stringify(result));
+                },
+                error:(error,result,msg)=>{
+                    $('#formerr').val(JSON.stringify(result));
+                    console.log(JSON.stringify(error));
+                }
+            })
+        }
         const onLoginSubmit=()=>{
-            $('#formerr').val('Hellow world!').show();
+            // document.getElementById('formerr').innerHTML='Hellow world!';
+            // alert('Hello world!');
+            const model = new Object();
+            model.name=$('#name').val();
+            model.email=$('#email').val();
+            model.password=$('#password').val();
+            const str =JSON.stringify(model);
+            $('#formerr').html(str).show();
+
         }
         const clearErr=()=>{
-            $('#formerr').val('').hide();
+           $('#formerr').html('').hide();
         }
     </script>
     <style>
@@ -85,7 +107,6 @@
         <h2 style="margin: 50px 0px 20px 50px;">
            請先登入再使用本系統!!
         </h2>
-        <form onsubmit="onLoginSubmit()">
             <div role="alert" class="alert alert-danger" id="formerr" name="formerr" style="display: none;"></div>
             <div class="input-group fMargin">
                 <div class="input-group-prepend">
@@ -103,13 +124,14 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">密 碼：</span>
                 </div>
-                <input type="pasword" class="form-control" id="password" name="password" placeholder="輸入密碼">
+                <input type="password" class="form-control" id="password" name="password" placeholder="輸入密碼">
             </div>
             <div class="col-12 fMargin">
-                <button type="submit" role="button" class="btn btn-primary">登入</button>
+                <button type="button" role="button" class="btn btn-primary"  onclick="onLoginSubmit();return false;">登入</button>
                 <input type="checkbox" name="keepLocal" style="margin-left: 100px;">
                 <label for="keepLocal">保留帳號，下次不用輸入</label>
             </div>
+        <form>
 
 
         </form>

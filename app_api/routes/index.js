@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require("jsonwebtoken");
-
+const db = require("../controllers/dbadmin");
 
 const auth = (req, res, next) => {
     //console.log(req.headers.authorization);
@@ -12,9 +12,9 @@ const auth = (req, res, next) => {
             next();
         });
     }
-
 };
 
+router.post('/initdata', db.dbinit);
 
 router.route('/')
 

@@ -1,9 +1,17 @@
 var sqlite3 = require('sqlite3').verbose();
-const dbpath = '../models/shopdb.db';
-var db = new sqlite3.Database(dbpath);
+const dbpath = 'shopdb.db';
+//const dbpath = '../models/shopdb.db';
+var db = new sqlite3.Database(dbpath,
+    sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE,
+    (err) => {
+        console.log(err);
+    });
+
+//new sqlite3.Database(dbpath);
 
 
-const dbinit = () => {
+const dbinit = (req, res) => {
+    console.log('dbinit');
     let createsql = 'CREATE TABLE IF NOT EXISTS shoptb (';
     createsql += 'id INTEGER PRIMARY KEY AUTOINCREMENT,';
     createsql += 'shopname text NOT NULL UNIQUE,';
@@ -71,12 +79,13 @@ const dbinit = () => {
     // db.run(createsql);
     //預插入系統管理者
     if (!getuserbymail('martinfb168@gmail.com')) {
-       const tabName='';
-       const colList=['name','password','phoneno','email','gender','role',];
-       const valList=['Martin','shop888','0933866241','martinfb168@gmail.com','1','admin'];
-       insertrow(tabName,colList,valList);
+        const tabName = '';
+        const colList = ['name', 'password', 'phoneno', 'email', 'gender', 'role',];
+        const valList = ['Martin', 'shop888', '0933866241', 'martinfb168@gmail.com', '1', 'admin'];
+        insertrow(tabName, colList, valList);
     }
-
+    res.status(200)
+    .JSON({message:'',data:''});
 }
 
 const getuserbymail = (mail) => {
@@ -105,9 +114,9 @@ const insertrow = (tabName, colList, valList) => {
             qmStr += '?,';
         }
     }
-    const sqlStr=`insert into ${tabName}${colList} values${qmStr}`;
-    db.run(sqlStr,valList,(err,rows)=>{
-        if(err){
+    const sqlStr = `insert into ${tabName}${colList} values${qmStr}`;
+    db.run(sqlStr, valList, (err, rows) => {
+        if (err) {
             console.log(err);
         } else {
             console.log(JSON.stringify(rows));

@@ -23,7 +23,7 @@ app.use(express.static(path.join(__dirname, 'app_public')));
 
 //Cross-Origin Resource Sharing (CORS) 設定
 app.use('/api', (req, res, next) => {
-    //console.log(req.headers.origin);
+    console.log(req.headers.origin);
     var allowedOrigins = ['http://127.0.0.1:4200', 'http://localhost:4200', 'http://127.0.0.1:3000', 'http://localhost:3000', 'https://familyaccounting.herokuapp.com/'];
     var origin = req.headers.origin;
     //console.log(req.headers.origin);
