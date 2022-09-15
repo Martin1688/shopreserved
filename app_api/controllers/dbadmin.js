@@ -1,5 +1,5 @@
 var sqlite3 = require('sqlite3').verbose();
-const dbpath = 'shopdb.db';
+const dbpath = 'app_api/models/shopdb.db';
 //const dbpath = '../models/shopdb.db';
 var db = new sqlite3.Database(dbpath,
     sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE,
