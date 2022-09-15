@@ -23,10 +23,12 @@ app.use(express.static(path.join(__dirname, 'app_public')));
 
 //Cross-Origin Resource Sharing (CORS) 設定
 app.use('/api', (req, res, next) => {
-    console.log(req.headers.origin);
-    var allowedOrigins = ['http://127.0.0.1:4200', 'http://localhost:4200', 'http://127.0.0.1:3000', 'http://localhost:3000', 'https://familyaccounting.herokuapp.com/'];
+    // if(req.headers.origin){
+    //     console.log(req.headers.origin);
+    // }
+    var allowedOrigins = ['http://127.0.0.1:4200', 'http://localhost:4200', 'http://127.0.0.1:3000', 'http://localhost:3000', 'https://shopreserved.vercel.app'];
     var origin = req.headers.origin;
-    //console.log(req.headers.origin);
+    console.log(origin);
     if (allowedOrigins.indexOf(origin) > -1) {
         res.header('Access-Control-Allow-Origin', origin);
     }
@@ -45,7 +47,8 @@ app.use('/web', webRouter);
 
 //指定首頁
 app.get('*', function(req, res, next) {
-    // console.log(__dirname);
+    // const prars=JSON.stringify(req.params);
+    // console.log(paras);
     // //console.log(__filename);
     // console.log('here is starter.'+req.path);
     let myroute =__dirname;
